@@ -6,12 +6,12 @@ from dotenv import load_dotenv, find_dotenv
 load_dotenv(find_dotenv(usecwd=True, raise_error_if_not_found=False))
 
 class Settings(BaseSettings):
-    model_config = SettingsConfigDict(
-        # Use top level .env file (one level above ./backend/)
-        env_file=".env",
-        env_ignore_empty=True,
-        extra="ignore",
-    )
+    # model_config = SettingsConfigDict(
+    #     # Use top level .env file (one level above ./backend/)
+    #     env_file=".env",
+    #     env_ignore_empty=True,
+    #     extra="ignore",
+    # )
     API_V1_STR: str = "/api"
     APP_NAME: str = "新闻头条"
     APP_VERSION: str = "0.1.0"
