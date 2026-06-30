@@ -1,8 +1,9 @@
 from pydantic_settings import BaseSettings,SettingsConfigDict
 import os
 from pydantic import  computed_field
-from dotenv import load_dotenv
-load_dotenv()
+from dotenv import load_dotenv, find_dotenv
+
+load_dotenv(find_dotenv(usecwd=True, raise_error_if_not_found=False))
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
