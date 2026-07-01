@@ -1,4 +1,3 @@
-version: '3'
 
 services:
   app:
@@ -53,5 +52,8 @@ services:
     networks:
       - helloworld_network
     command: redis-server /etc/redis/redis.conf
+
+networks:
+  helloworld_network:
 
 
