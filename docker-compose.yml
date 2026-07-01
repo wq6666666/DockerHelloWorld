@@ -4,7 +4,7 @@ services:
     image: helloworld_docker:1.7
     container_name: helloworld
     ports:
-      - "8000:8000"
+      - "8082:8000"
     volumes:
       - ./routers:/app/routers
       - ./cache:/app/cache
