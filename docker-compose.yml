@@ -1,0 +1,57 @@
+version: '3'
+
+services:
+  app:
+    image: helloworld_docker:1.7
+    container_name: helloworld
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./routers:/app/routers
+      - ./cache:/app/cache
+      - ./configs:/app/configs
+      - ./crud:/app/crud
+      - ./models:/app/models
+      - ./utils:/app/utils
+      - ./main.py:/app/main.py
+      - ./settings.py:/app/settings.py
+    networks:
+      - helloworld_network
+    env_file:
+      - .env
+    depends_on:
+      - db
+      - redis
+
+  db:
+    image: mysql:8.0
+    container_name: mysql8
+    environment:
+      MYSQL_ROOT_PASSWORD: "wan20001103"
+      MYSQL_ALLOW_EMPTY_PASSWORD: "no"
+      MYSQL_DATABASE: "news_app"
+      MYSQL_USER: "xwq"
+      MYSQL_PASSWORD: "123456"
+    ports:
+      - "3309:3306"
+    volumes:
+      - /app/mysql/conf:/etc/mysql/conf.d
+      - /app/mysql/logs:/logs
+      - /app/mysql/data:/var/lib/mysql
+      - /app/mysql/init:/docker-entrypoint-initdb.d
+    networks:
+      - helloworld_network
+
+  redis:
+    image: redis:6.0.8
+    container_name: redis608
+    ports:
+      - "6380:6379"
+    volumes:
+      - /app/redis/redis.conf:/etc/redis/redis.conf
+      - /app/redis/data:/data
+    networks:
+      - helloworld_network
+    command: redis-server /etc/redis/redis.conf
+
+
