@@ -3,7 +3,7 @@ import redis.asyncio as redis
 import json
 from settings import settings
 
-redis_client = redis.Redis(**settings.radis_client)
+redis_client = redis.Redis(**settings.redis_client)
 #设置和读取（字符串和列表或字典）"[{}]"
 #读取字符串
 async def get_cache(key:str):

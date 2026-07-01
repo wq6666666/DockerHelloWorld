@@ -1,17 +1,14 @@
 from pydantic_settings import BaseSettings,SettingsConfigDict
 import os
 from pydantic import  computed_field
-from dotenv import load_dotenv, find_dotenv
-
-load_dotenv(find_dotenv(usecwd=True, raise_error_if_not_found=False))
 
 class Settings(BaseSettings):
-    # model_config = SettingsConfigDict(
-    #     # Use top level .env file (one level above ./backend/)
-    #     env_file=".env",
-    #     env_ignore_empty=True,
-    #     extra="ignore",
-    # )
+    model_config = SettingsConfigDict(
+        # Use top level .env file (one level above ./backend/)
+        env_file=".env",
+        env_ignore_empty=True,
+        extra="ignore",
+    )
     API_V1_STR: str = "/api"
     APP_NAME: str = "新闻头条"
     APP_VERSION: str = "0.1.0"
@@ -20,16 +17,16 @@ class Settings(BaseSettings):
     JWT_algorithm:str = "HS256" # JWT 签名算法
     JWT_EXPIRE_MINUTES: int = 60 * 24 * 1  # Token 过期时间：7 天
     # =================数据库连接参数=================
-    DB_USER: str = os.getenv("DB_USER")
-    DB_PASSWORD: str = os.getenv("DB_PASSWORD")
-    DB_HOST: str = os.getenv("DB_HOST")
-    DB_PORT: int = os.getenv("DB_PORT")
-    DB_NAME: str = os.getenv("DB_NAME")
+    DB_USER: str = "root"
+    DB_PASSWORD: str = "123456"
+    DB_HOST: str = "localhost"
+    DB_PORT: int = 3306
+    DB_NAME: str = "news_app"
     DB_CHARSET: str = "utf8mb4"
-    REDIS_HOST: str = os.getenv("REDIS_HOST")  # Redis主机地址
-    REDIS_PORT: int = os.getenv("REDIS_PORT") # Redis端口号
-    REDIS_DB: int = os.getenv("REDIS_DB")  # Redis数据库编号默认0
-    REDIS_PASSWORD:str = os.getenv("REDIS_PASSWORD")
+    REDIS_HOST: str = "localhost"
+    REDIS_PORT: int = 6379
+    REDIS_DB: int = 0
+    REDIS_PASSWORD:str = "123456"
     DECODE_RESPONSE:bool=True #是否将字节数据解码为字符串
 
     @computed_field
@@ -42,7 +39,7 @@ class Settings(BaseSettings):
 
     @computed_field
     @property
-    def radis_client(self) ->  dict:
+    def redis_client(self) ->  dict:
         return {"host": self.REDIS_HOST, "port": self.REDIS_PORT, "db": self.REDIS_DB, "decode_responses": self.DECODE_RESPONSE,"password": self.REDIS_PASSWORD}
 
 
