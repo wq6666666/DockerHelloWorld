@@ -55,5 +55,7 @@ services:
 
 networks:
   helloworld_network:
+    driver: bridge
+    name: helloworld_network
 
 
